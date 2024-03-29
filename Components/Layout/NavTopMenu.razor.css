@@ -1,0 +1,5 @@
+﻿.navbar {
+    max-width: 55%; /* Ograničava širinu na 50% */
+    height: 30px; /* Postavlja visinu na 50 piksela */
+    margin: 10px auto 0; /* Postavlja marginu: gornja 100px, horizontalna automatski, donja 0 */
+}

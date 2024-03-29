@@ -1,0 +1,7 @@
+﻿@No1B_HostAddress = https://localhost:44338
+
+
+
+GET {{No1B_HostAddress}}/category/Categories
+
+###

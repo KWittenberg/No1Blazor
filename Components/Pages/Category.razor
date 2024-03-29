@@ -1,0 +1,50 @@
+﻿@page "/category"
+@using No1B.DTOs
+@using No1B.Enums
+@using No1B.Repositories
+@inject ICategoryRepository CategoryRepository
+@rendermode InteractiveServer
+
+<PageTitle>Category</PageTitle>
+
+<h1>Category</h1>
+
+<table class="mt-5 table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    @if ((_categories?.Status == ResponseStatus.OK) && _categories.Data != null)
+    {
+        @foreach (var item in _categories.Data)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3">Loading...</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+@code {
+    // private IList<CategoryOutput>? _categories;
+    private Response<List<CategoryOutput>>? _categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _categories = await CategoryRepository.GetCategoriesAsync();
+    }
+}
