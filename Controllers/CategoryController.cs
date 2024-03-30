@@ -11,13 +11,13 @@ public class CategoryController(ICategoryRepository categoryRepository) : Contro
     [HttpGet("Categories")]
     public async Task<ActionResult<Response<List<CategoryOutput>>>> GetCategories()
     {
-        return Ok(await categoryRepository.GetCategoriesAsync());
+        return Ok(await categoryRepository.GetAllAsync());
     }
 
     [HttpGet("Category")]
     public async Task<ActionResult<Response<CategoryOutput>>> GetCategory(Guid id)
     {
-        return Ok(await categoryRepository.GetCategoryAsync(id));
+        return Ok(await categoryRepository.GetByIdAsync(id));
     }
 
     [HttpGet("Name")]
@@ -38,10 +38,9 @@ public class CategoryController(ICategoryRepository categoryRepository) : Contro
         return Ok(await categoryRepository.UpdateCategoryAsync(input));
     }
 
-    //[HttpDelete("admin/{id}"), Authorize(Roles = "Admin")]
-    //public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory(int id)
-    //{
-    //    var result = await _categoryService.DeleteCategory(id);
-    //    return Ok(result);
-    //}
+    [HttpDelete("Delete")]
+    public async Task<ActionResult<Response<CategoryOutput>>> DeleteCategory(Guid id)
+    {
+        return Ok(await categoryRepository.DeleteAsync(id));
+    }
 }

@@ -1,13 +1,13 @@
-﻿@page "/category"
+﻿@page "/user"
 @using No1B.DTOs
 @using No1B.Enums
 @using No1B.Repositories
-@inject ICategoryRepository CategoryRepository
+@inject IUserRepository UserRepository
 @rendermode InteractiveServer
 
-<PageTitle>Category</PageTitle>
+<PageTitle>User</PageTitle>
 
-<h1>Category</h1>
+<h1>User</h1>
 
 <table class="mt-5 table table-hover">
     <thead>
@@ -18,14 +18,14 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-    @if ((Categories?.Status == ResponseStatus.OK) && Categories.Data != null)
+        @if ((Users?.Status == ResponseStatus.OK) && Users.Data != null)
     {
-        @foreach (var item in Categories.Data)
+            @foreach (var item in Users.Data)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Description</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
             </tr>
         }
     }
@@ -40,11 +40,10 @@
 
 
 @code {
-    // private IList<CategoryOutput>? _categories;
-    private Response<List<CategoryOutput>>? Categories;
+    private Response<List<UserOutput>>? Users;
 
     protected override async Task OnInitializedAsync()
     {
-        Categories = await CategoryRepository.GetAllAsync();
+        Users = await UserRepository.GetAllAsync();
     }
 }

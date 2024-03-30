@@ -1,4 +1,4 @@
-﻿@page "/category"
+﻿@page "/role"
 @using No1B.DTOs
 @using No1B.Enums
 @using No1B.Repositories
@@ -18,9 +18,9 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-    @if ((Categories?.Status == ResponseStatus.OK) && Categories.Data != null)
+    @if ((_categories?.Status == ResponseStatus.OK) && _categories.Data != null)
     {
-        @foreach (var item in Categories.Data)
+        @foreach (var item in _categories.Data)
         {
             <tr>
                 <td>@item.Id</td>
@@ -41,10 +41,10 @@
 
 @code {
     // private IList<CategoryOutput>? _categories;
-    private Response<List<CategoryOutput>>? Categories;
+    private Response<List<CategoryOutput>>? _categories;
 
     protected override async Task OnInitializedAsync()
     {
-        Categories = await CategoryRepository.GetAllAsync();
+        _categories = await CategoryRepository.GetAllAsync();
     }
 }

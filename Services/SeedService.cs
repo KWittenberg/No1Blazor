@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using No1B.Data;
@@ -82,17 +83,17 @@ public class SeedService(ApplicationDbContext db,
 
     private async Task SeedCategories(string filePath)
     {
-        //if (!await db.Categories.AsNoTracking().AnyAsync())
-        //{
-        var jsonText = await File.ReadAllTextAsync(filePath);
-        var categories = JsonConvert.DeserializeObject<List<Category>>(jsonText);
-
-        foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description)))
+        if (!await db.Categories.AsNoTracking().AnyAsync())
         {
-            await db.Categories.AddAsync(category);
-        }
+            var jsonText = await File.ReadAllTextAsync(filePath);
+            var categories = JsonConvert.DeserializeObject<List<Category>>(jsonText);
 
-        await db.SaveChangesAsync();
-        //}
+            foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description)))
+            {
+                await db.Categories.AddAsync(category);
+            }
+
+            await db.SaveChangesAsync();
+        }
     }
 }
