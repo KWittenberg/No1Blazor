@@ -23,29 +23,4 @@ public class AppDbInitializer
             db.SaveChanges();
         }
     }
-
-
-    //private async Task SeedCategories(string filePath)
-    //{
-    //    if (await _categoryRepository.GetCountAsync() <= 0)
-    //    {
-    //        var jsonText = await File.ReadAllTextAsync(filePath);
-    //        var categories = JsonConvert.DeserializeObject<List<Category>>(jsonText);
-
-    //        foreach (var category in categories.Select(data =>
-    //                     new Category(_guidGenerator.Create(), data.Name, data.Description)))
-    //        {
-    //            await _categoryRepository.InsertAsync(category);
-    //        }
-
-    //        var categoryDataCount = await _categoryRepository.GetCountAsync();
-    //        var expectedCategoryCount = categories.Count;
-
-    //        if (categoryDataCount == expectedCategoryCount)
-    //        {
-    //            var timeNow = DateTime.Now.ToString("HH:mm:ss");
-    //            Console.WriteLine($"{timeNow} | SEED: Categories OK - Added {categoryDataCount} records");
-    //        }
-    //    }
-    //}
 }

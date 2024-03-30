@@ -81,23 +81,10 @@ public class CategoryRepository(ApplicationDbContext db) : ICategoryRepository
 
 
 
-
-
-
-
-
     private Response<T> Response<T>(ResponseStatus status, string message, T? data)
     {
         return new Response<T> { Status = status, Message = message, Data = data };
     }
-
-
-
-
-
-
-
-
 
 
     //public async Task<ProductCategoryViewModel> UpdateProductCategoryAsync(ProductCategoryUpdateBinding model)

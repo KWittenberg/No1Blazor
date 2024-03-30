@@ -5,7 +5,9 @@ using No1B.Components;
 using No1B.Components.Account;
 using No1B.Data;
 using No1B.Entities;
+using No1B.Options;
 using No1B.Repositories;
+using No1B.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +31,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
+// Configure Appsettings Options
+builder.Services.Configure<AdminOptions>(builder.Configuration.GetSection(nameof(AdminOptions)));
+
+
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // Add for Seed
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
@@ -42,9 +50,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddTransient<ISeedService, SeedService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
+
+// Add for Seed
+await SeedDataAsync(app.Services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -73,15 +85,23 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapControllers();
-// app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
 // Seed database
-AppDbInitializer.Seed(app);
+//AppDbInitializer.Seed(app);
 
 //app.MapCategoryEndpoints();
 
 app.Run();
+
+
+
+// Add for Starting SeedService
+static async Task SeedDataAsync(IServiceProvider serviceProvider)
+{
+    var scope = serviceProvider.CreateAsyncScope();
+    var seedService = scope.ServiceProvider.GetRequiredService<ISeedService>();
+    await seedService.SeedAsync();
+}

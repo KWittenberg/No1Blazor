@@ -5,3 +5,7 @@
 GET {{No1B_HostAddress}}/category/Categories
 
 ###
+
+GET {{No1B_HostAddress}}/category/Name?name=movies
+
+###

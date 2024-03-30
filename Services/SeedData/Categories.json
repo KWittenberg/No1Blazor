@@ -1,0 +1,10 @@
+[
+  {
+    "Name": "Books",
+    "Description": "Book Category"
+  },
+  {
+    "Name": "Photos",
+    "Description": "Photo Category"
+  }
+]
