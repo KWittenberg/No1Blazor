@@ -18,10 +18,22 @@ public class SeedService(ApplicationDbContext db,
 
     public async Task SeedAsync()
     {
+#if DEBUG
+        await MigrateDatabaseAsync();
+#endif
+
         await SeedAdminRole();
         await SeedAdminUser();
 
         await SeedCategories("./Services/SeedData/Categories.json");
+    }
+
+    private async Task MigrateDatabaseAsync()
+    {
+        if ((await db.Database.GetPendingMigrationsAsync()).Any())
+        {
+            await db.Database.MigrateAsync();
+        }
     }
 
     private async Task SeedAdminRole()

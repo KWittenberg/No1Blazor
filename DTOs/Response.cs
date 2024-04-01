@@ -4,7 +4,7 @@ namespace No1B.DTOs;
 
 public class Response<T>
 {
-    public ResponseStatus Status { get; set; }
+    public HttpStatusCode HttpStatusCode { get; set; }
 
     public string Message { get; set; } = string.Empty;
 

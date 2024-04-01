@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody class="table-group-divider">
-    @if ((Categories?.Status == ResponseStatus.OK) && Categories.Data != null)
+        @if ((Categories?.HttpStatusCode == HttpStatusCode.OK) && Categories.Data != null)
     {
         @foreach (var item in Categories.Data)
         {

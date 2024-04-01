@@ -12,28 +12,28 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
     public async Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name)
     {
         var entity = await db.Categories.FirstOrDefaultAsync(x => x.Name == name);
-        if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(ResponseStatus.NotFound, "Entity Not Found!");
+        if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.NotFound, "Entity Not Found!");
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", entity.Adapt<CategoryOutput>());
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
 
     public async Task<Response<CategoryOutput>> AddCategoryAsync(CategoryInput input)
     {
         var entity = await db.Categories.FirstOrDefaultAsync(x => x.Name == input.Name);
-        if (entity is not null) return ResponseHelper.ErrorResponse<CategoryOutput>(ResponseStatus.Forbidden, "Entity Exists!");
+        if (entity is not null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.Forbidden, "Entity Exists!");
 
         entity = new Category(Guid.NewGuid(), input.Name, input.Description);
 
         await db.Categories.AddAsync(entity);
         await db.SaveChangesAsync();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", entity.Adapt<CategoryOutput>());
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
 
     public async Task<Response<CategoryOutput>> UpdateCategoryAsync(CategoryInput input)
     {
         var entity = await db.Categories.FindAsync(input.Id);
-        if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(ResponseStatus.NotFound, "Entity Not Found!");
+        if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.NotFound, "Entity Not Found!");
 
         entity.SetName(input.Name);
         entity.SetDescription(input.Description);
@@ -41,7 +41,7 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
         db.Categories.Update(entity);
         await db.SaveChangesAsync();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", entity.Adapt<CategoryOutput>());
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
 }
 

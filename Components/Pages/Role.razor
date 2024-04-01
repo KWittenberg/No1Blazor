@@ -2,7 +2,7 @@
 @using No1B.DTOs
 @using No1B.Enums
 @using No1B.Repositories
-@inject ICategoryRepository CategoryRepository
+@inject IRoleRepository RoleRepository
 @rendermode InteractiveServer
 
 <PageTitle>Category</PageTitle>
@@ -14,37 +14,34 @@
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col">Description</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
-    @if ((_categories?.Status == ResponseStatus.OK) && _categories.Data != null)
-    {
-        @foreach (var item in _categories.Data)
+        @if ((Roles?.HttpStatusCode == HttpStatusCode.OK) && Roles.Data != null)
+        {
+            @foreach (var item in Roles.Data)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Description</td>
+                <td colspan="3">Loading...</td>
             </tr>
         }
-    }
-    else
-    {
-        <tr>
-            <td colspan="3">Loading...</td>
-        </tr>
-    }
     </tbody>
 </table>
 
 
 @code {
-    // private IList<CategoryOutput>? _categories;
-    private Response<List<CategoryOutput>>? _categories;
+    private Response<List<RoleOutput>>? Roles;
 
     protected override async Task OnInitializedAsync()
     {
-        _categories = await CategoryRepository.GetAllAsync();
+        Roles = await RoleRepository.GetAllAsync();
     }
 }

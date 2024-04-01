@@ -5,13 +5,13 @@ namespace No1B.Repositories;
 
 public static class ResponseHelper
 {
-    public static Response<T> CreateResponse<T>(ResponseStatus status, string message, T? data)
+    public static Response<T> CreateResponse<T>(HttpStatusCode status, string message, T? data)
     {
-        return new Response<T> { Status = status, Message = message, Data = data };
+        return new Response<T> { HttpStatusCode = status, Message = message, Data = data };
     }
 
-    public static Response<T> ErrorResponse<T>(ResponseStatus status, string message)
+    public static Response<T> ErrorResponse<T>(HttpStatusCode status, string message)
     {
-        return new Response<T> { Status = status, Message = message };
+        return new Response<T> { HttpStatusCode = status, Message = message };
     }
 }

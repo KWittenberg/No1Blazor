@@ -11,44 +11,43 @@ public class BaseRepository<TEntity, TOutput>(ApplicationDbContext db) : IBaseRe
     public virtual async Task<Response<List<TOutput>>> GetAllAsync()
     {
         var entities = await db.Set<TEntity>().ToListAsync();
-        if (entities.Count == 0) return ResponseHelper.CreateResponse<List<TOutput>>(ResponseStatus.NotFound, "Entities Not Found!", null);
+        if (entities.Count == 0) return ResponseHelper.CreateResponse<List<TOutput>>(HttpStatusCode.NotFound, "Entities Not Found!", null);
         var outputs = entities.Adapt<List<TOutput>>();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", outputs);
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", outputs);
     }
 
     public virtual async Task<Response<TOutput>> GetByIdAsync(Guid id)
     {
         var entity = await db.Set<TEntity>().FindAsync(id);
-        if (entity is null) return ResponseHelper.ErrorResponse<TOutput>(ResponseStatus.NotFound, "Entity not found");
+        if (entity is null) return ResponseHelper.ErrorResponse<TOutput>(HttpStatusCode.NotFound, "Entity not found");
         var output = entity.Adapt<TOutput>();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", output);
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", output);
     }
 
     public virtual async Task<Response<TOutput>> GetByNameAsync(string name)
     {
         var entity = await db.Set<TEntity>().FindAsync(name);
-        if (entity is null) return ResponseHelper.ErrorResponse<TOutput>(ResponseStatus.NotFound, "Entity not found");
+        if (entity is null) return ResponseHelper.ErrorResponse<TOutput>(HttpStatusCode.NotFound, "Entity not found");
         var output = entity.Adapt<TOutput>();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", output);
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", output);
     }
 
     public virtual async Task<Response<TOutput>> DeleteAsync(Guid id)
     {
         var entity = await db.Set<TEntity>().FindAsync(id);
-        if (entity == null) return ResponseHelper.ErrorResponse<TOutput>(ResponseStatus.NotFound, "Entity not found");
+        if (entity == null) return ResponseHelper.ErrorResponse<TOutput>(HttpStatusCode.NotFound, "Entity not found");
 
         db.Set<TEntity>().Remove(entity);
         await db.SaveChangesAsync();
 
         var output = entity.Adapt<TOutput>();
 
-        return ResponseHelper.CreateResponse(ResponseStatus.OK, "OK", output);
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", output);
     }
 }
-
 
 //public virtual async Task<Response<TOutput>> AddAsync(TInput input)
 //{

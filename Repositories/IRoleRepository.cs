@@ -1,12 +1,10 @@
-﻿using No1B.DTOs;
-using No1B.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using No1B.DTOs;
 
 namespace No1B.Repositories;
 
-public interface IUserRepository : IBaseRepository<ApplicationUser, UserOutput>
+public interface IRoleRepository : IBaseRepository<IdentityRole, RoleOutput>
 {
-    Task<Response<List<UserOutput>>> GetUsersWithRolesAsync();
-
     //Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name);
 
     //Task<Response<CategoryOutput>> AddCategoryAsync(CategoryInput input);

@@ -12,6 +12,8 @@ public class UserOutput
 
     public string? Email { get; set; } = string.Empty;
 
+    public string? PhoneNumber { get; set; } = string.Empty;
+
     public string? AvatarUrl { get; set; } = string.Empty;
 
     public DateTime? DateOfBirth { get; set; }
@@ -23,4 +25,7 @@ public class UserOutput
     public string? City { get; set; } = string.Empty;
 
     public string? Street { get; set; } = string.Empty;
+
+
+    public List<RoleOutput>? Roles { get; set; }
 }

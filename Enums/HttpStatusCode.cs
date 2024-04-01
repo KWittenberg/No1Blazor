@@ -1,6 +1,6 @@
 ﻿namespace No1B.Enums;
 
-public enum ResponseStatus
+public enum HttpStatusCode
 {
     OK = 200,
     BadRequest = 400,

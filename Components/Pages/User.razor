@@ -12,29 +12,36 @@
 <table class="mt-5 table table-hover">
     <thead>
         <tr>
-            <th scope="col">Id</th>
+            <th scope="col">Role</th>
             <th scope="col">Name</th>
-            <th scope="col">Description</th>
+            <th scope="col">DateOfBirth</th>
+            <th scope="col">Email</th>
+            <th scope="col">PhoneNumber</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
-        @if ((Users?.Status == ResponseStatus.OK) && Users.Data != null)
-    {
+        @if ((Users?.HttpStatusCode == HttpStatusCode.OK) && Users.Data != null)
+        {
             @foreach (var item in Users.Data)
+            {
+                <tr>
+                    @foreach (var role in item.Roles!)
+                    {
+                        <td><span class="badge text-bg-primary">@role.Name</span></td>
+                    }
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.DateOfBirth?.ToShortDateString()</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.Email</td>
+                <td colspan="3">Loading...</td>
             </tr>
         }
-    }
-    else
-    {
-        <tr>
-            <td colspan="3">Loading...</td>
-        </tr>
-    }
     </tbody>
 </table>
 
@@ -44,6 +51,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Users = await UserRepository.GetAllAsync();
+        Users = await UserRepository.GetUsersWithRolesAsync();
     }
 }
