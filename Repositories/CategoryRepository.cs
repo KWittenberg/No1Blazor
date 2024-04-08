@@ -9,6 +9,17 @@ namespace No1B.Repositories;
 
 public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Category, CategoryOutput>(db), ICategoryRepository
 {
+    //protected readonly ApplicationDbContext _db = db;
+
+    //public async Task<Response<List<CategoryOutput>>> GetAllAsync()
+    //{
+    //    var entities = await _db.Categories.ToListAsync();
+    //    if (entities.Count == 0) return ResponseHelper.CreateResponse<List<CategoryOutput>>(HttpStatusCode.NotFound, "Entities Not Found!", null);
+    //    var outputs = entities.Adapt<List<CategoryOutput>>();
+
+    //    return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", outputs);
+    //}
+
     public async Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name)
     {
         var entity = await db.Categories.FirstOrDefaultAsync(x => x.Name == name);
@@ -30,9 +41,9 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
 
-    public async Task<Response<CategoryOutput>> UpdateCategoryAsync(CategoryInput input)
+    public async Task<Response<CategoryOutput>> UpdateCategoryAsync(Guid id, CategoryInput input)
     {
-        var entity = await db.Categories.FindAsync(input.Id);
+        var entity = await db.Categories.FindAsync(id);
         if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.NotFound, "Entity Not Found!");
 
         entity.SetName(input.Name);
@@ -43,6 +54,8 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
+
+
 }
 
 

@@ -33,9 +33,9 @@ public class CategoryController(ICategoryRepository repository) : ControllerBase
     }
 
     [HttpPost("Update")]
-    public async Task<ActionResult<Response<CategoryOutput>>> Update(CategoryInput input)
+    public async Task<ActionResult<Response<CategoryOutput>>> Update(Guid id, CategoryInput input)
     {
-        return Ok(await repository.UpdateCategoryAsync(input));
+        return Ok(await repository.UpdateCategoryAsync(id, input));
     }
 
     [HttpDelete("Delete")]

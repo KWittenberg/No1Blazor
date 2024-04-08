@@ -6,8 +6,11 @@ using No1B.Enums;
 
 namespace No1B.Repositories;
 
-public class BaseRepository<TEntity, TOutput>(ApplicationDbContext db) : IBaseRepository<TEntity, TOutput> where TEntity : class
+public class BaseRepository<TEntity, TOutput>(ApplicationDbContext db) where TEntity : class
 {
+    //protected readonly ApplicationDbContext _db = db;
+
+
     public virtual async Task<Response<List<TOutput>>> GetAllAsync()
     {
         var entities = await db.Set<TEntity>().ToListAsync();

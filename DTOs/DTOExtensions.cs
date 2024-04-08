@@ -1,8 +1,6 @@
-﻿using No1B.Entities;
+﻿namespace No1B.DTOs;
 
-namespace No1B.DTOs;
-
-public static class DTOExtensions
-{
-    public static CategoryDTO ToModel(this Category category) => new CategoryDTO(category.Id, category.Name, category.Description);
-}
+//public static class DtoExtensions
+//{
+//    public static CategoryInput ToModel(this Category category) => new CategoryInput(category.Name, category.Description);
+//}

@@ -1,0 +1,142 @@
+﻿@* @page "/category2"
+@using No1B.DTOs
+@using No1B.Enums
+@using No1B.Repositories
+
+@inject ICategoryRepository CategoryRepository
+@rendermode InteractiveServer 
+
+<PageTitle>Category</PageTitle>
+
+<h1>Category</h1>
+
+
+<EditForm Model="@CategoryInput" OnInvalidSubmit="HandleValidSubmit" FormName="AddCategoryForm">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3 form-group">
+        <label for="name">Name</label>
+        <InputText id="name" class="form-control" @bind-Value="CategoryInput.Name" />
+        <ValidationMessage For="@(() => CategoryInput.Name)"></ValidationMessage>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="name">Description</label>
+        <InputText id="description" class="form-control" @bind-Value="CategoryInput.Description" />
+        <ValidationMessage For="@(() => CategoryInput.Description)"></ValidationMessage>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</EditForm>
+
+
+@if (Categories.Data.Any())
+{
+    <table class="mt-5 table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCategory"><i class="bi bi-plus"></i> Add</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if ((Categories?.HttpStatusCode == HttpStatusCode.OK) && Categories.Data != null)
+            {
+                @foreach (var item in Categories.Data)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3">Loading...</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<!-- Modal Add Category -->
+<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="Name">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="Description">
+                    </div>
+
+                </form>
+
+
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+
+
+
+@code {
+    // private Response<List<CategoryOutput>>? Categories;
+
+    // [SupplyParameterFromForm]
+    // private CategoryInput CategoryInput { get; set; }
+
+    // private Response<CategoryOutput> CategoryOutput { get; set; }
+
+
+
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     LoadCategories();
+    //     //Categories = await CategoryRepository.GetAllAsync();
+    // }
+
+    // async void LoadCategories()
+    // {
+    //     Categories = await CategoryRepository.GetAllAsync();
+    // }
+
+    // private void HandleValidSubmit()
+    // {
+    //     if (CategoryInput is not null)
+    //     {
+    //         CategoryRepository.AddCategoryAsync(CategoryInput);
+    //         // CategoryInput = new();
+    //         LoadCategories();
+    //     }
+    // }
+
+    // async void ViewCategory(string name)
+    // {
+    //     CategoryOutput = await CategoryRepository.GetCategoryByNameAsync(name);
+    // }
+}

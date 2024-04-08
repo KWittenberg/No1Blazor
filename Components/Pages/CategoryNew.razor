@@ -1,0 +1,97 @@
+﻿@page "/category3"
+
+@inject ICategoryRepository CategoryRepository
+
+<PageTitle>Category</PageTitle>
+
+<h1>Category</h1>
+
+
+<EditForm Model="@CategoryInput" OnValidSubmit="HandleValidSubmit" FormName="AddCategoryForm">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3 form-group">
+        <label for="name">Name</label>
+        <InputText id="name" class="form-control" @bind-Value="CategoryInput.Name" />
+        <ValidationMessage For="@(() => CategoryInput.Name)"></ValidationMessage>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="name">Description</label>
+        <InputText id="description" class="form-control" @bind-Value="CategoryInput.Description" />
+        <ValidationMessage For="@(() => CategoryInput.Description)"></ValidationMessage>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</EditForm>
+
+
+<table class="mt-5 table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCategory"><i class="bi bi-plus"></i> Add</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        @if ((Categories?.HttpStatusCode == HttpStatusCode.OK) && Categories.Data != null)
+        {
+            @foreach (var item in Categories.Data)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">Loading...</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    private Response<List<CategoryOutput>>? Categories;
+
+    // [SupplyParameterFromForm(FormName = "AddCategoryForm")]
+    [SupplyParameterFromForm]
+    private CategoryInput CategoryInput { get; set; }
+
+    private Response<CategoryOutput> CategoryOutput { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCategories();
+        // Categories = await CategoryRepository.GetAllAsync();
+    }
+
+    async Task LoadCategories()
+    {
+        Categories = await CategoryRepository.GetAllAsync();
+    }
+
+    private void HandleValidSubmit()
+    {
+        if (CategoryInput.Name is not null)
+        {
+            CategoryRepository.AddCategoryAsync(CategoryInput);
+            // CategoryInput = new();
+            LoadCategories();
+        }
+    }
+
+    async void ViewCategory(string name)
+    {
+        CategoryOutput = await CategoryRepository.GetCategoryByNameAsync(name);
+    }
+}

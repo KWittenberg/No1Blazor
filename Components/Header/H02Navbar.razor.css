@@ -1,0 +1,15 @@
+﻿.container {
+    max-width: 50%;
+    margin: 10px auto 0;
+}
+
+.logo-container img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.logo-container h1 {
+    display: inline-block;
+    vertical-align: middle;
+}

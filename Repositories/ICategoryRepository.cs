@@ -9,7 +9,7 @@ public interface ICategoryRepository : IBaseRepository<Category, CategoryOutput>
 
     Task<Response<CategoryOutput>> AddCategoryAsync(CategoryInput input);
 
-    Task<Response<CategoryOutput>> UpdateCategoryAsync(CategoryInput input);
+    Task<Response<CategoryOutput>> UpdateCategoryAsync(Guid id, CategoryInput input);
 }
 
 //public interface ICategoryRepository

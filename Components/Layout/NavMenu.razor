@@ -4,7 +4,7 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">No1B</a>
+        <a class="navbar-brand" href="/"><h2>BoltaShop</h2></a>
     </div>
 </div>
 
@@ -12,27 +12,30 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        @* <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
-        </div>
+        </div> *@
         
-        <div class="nav-item px-3">
+        <div class="nav-item mt-5 px-3 p-0 border-0">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <span><i class="bi bi-house-door-fill"></i>Dashboard</span>
+            </NavLink>
+        </div>
+        <div class="nav-item mt-2 px-3 p-0 border-0">
             <NavLink class="nav-link" href="role">
-                <span class="bi bi-windows" aria-hidden="true"></span> Role
+                <span><i class="bi bi-windows"></i>Role</span>
             </NavLink>
         </div>
-        
-        <div class="nav-item px-3">
+        <div class="nav-item mt-2 px-3 p-0 border-0">
             <NavLink class="nav-link" href="user">
-                <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> User
+                <span><i class="bi bi-person-fill"></i>User</span>
             </NavLink>
         </div>
-        
-        <div class="nav-item px-3">
+        <div class="nav-item mt-2 px-3 p-0 border-0">
             <NavLink class="nav-link" href="category">
-                <span class="bi bi-server" aria-hidden="true"></span> Category
+                <span><i class="bi bi-server"></i>Category</span>
             </NavLink>
         </div>
         

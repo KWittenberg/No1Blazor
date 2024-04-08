@@ -10,9 +10,5 @@ public interface IBaseRepository<TEntity, TOutput>
 
     Task<Response<TOutput>> GetByNameAsync(string name);
 
-    //Task<Response<TOutput>> AddAsync(TInput input);
-
-    //Task<Response<TOutput>> UpdateAsync(Guid id, TInput input);
-
     Task<Response<TOutput>> DeleteAsync(Guid id);
 }

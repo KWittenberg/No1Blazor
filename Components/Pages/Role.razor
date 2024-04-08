@@ -1,13 +1,10 @@
 ﻿@page "/role"
-@using No1B.DTOs
-@using No1B.Enums
-@using No1B.Repositories
 @inject IRoleRepository RoleRepository
-@rendermode InteractiveServer
+@* @rendermode InteractiveServer *@
 
-<PageTitle>Category</PageTitle>
+<PageTitle>Role</PageTitle>
 
-<h1>Category</h1>
+<h1>Role</h1>
 
 <table class="mt-5 table table-hover">
     <thead>
@@ -30,7 +27,7 @@
         else
         {
             <tr>
-                <td colspan="3">Loading...</td>
+                <td class="text-center" colspan="3">Loading...</td>
             </tr>
         }
     </tbody>

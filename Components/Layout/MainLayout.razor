@@ -1,24 +1,50 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<!-- Modal -->
+<SignInsignUpModal />
+<QuickViewModal />
 
+
+<!-- Header -->
+<Header></Header>
+
+<!-- Body -->
+@Body
+
+
+@* <div class="page">
+        <AuthorizeView>
+            <Authorized>
+                <div class="sidebar">
+                    <NavMenu />
+                </div>
+            </Authorized>
+        </AuthorizeView>
     <main>
-        @* <div class="top-row px-4">
-           <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>  *@
-            
+        <div class="top-row px-4">
+        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>  
+
         <NavTop />
-        <NavTopMenu />
+        <NavTopMenu /> 
 
         <article class="mt-5 container content px-4">
             @Body
         </article>
-    
-        </main>
-</div>
+
+    </main>
+</div> *@
+
+
+<!-- Footer -->
+<Footer ></Footer>
+
+<!-- Toolbar for handheld devices -->
+<ToolbarForHandheldDevices />
+
+<!-- Back To Top Button -->
+<BackToTopButton />
+
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
