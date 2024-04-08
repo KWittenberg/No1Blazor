@@ -4,37 +4,70 @@
 
 <PageTitle>Role</PageTitle>
 
-<h1>Role</h1>
+<!-- Role -->
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+            <h1 class="h3 text-light mb-0">Role</h1>
+        </div>
+    </div>
+</div>
 
-<table class="mt-5 table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-        </tr>
-    </thead>
-    <tbody class="table-group-divider">
-        @if ((Roles?.HttpStatusCode == HttpStatusCode.OK) && Roles.Data != null)
-        {
-            @foreach (var item in Roles.Data)
-            {
+<!-- Role Content -->
+<div class="container pb-5 mb-2 mb-md-3">
+    <!-- Toolbar -->
+    <div class="d-flex justify-content-between align-items-center pt-lg-2 pb-4 pb-lg-5 mb-lg-3">
+        <div class="form-inline">
+            <label class="text-light opacity-75 text-nowrap mr-2 d-none d-lg-block" for="order-sort">Sort orders:</label>
+            <select class="form-control custom-select" id="order-sort">
+                <option>All</option>
+                <option>Name</option>
+            </select>
+        </div>
+        <a class="btn btn-primary btn-sm d-none d-lg-inline-block" href="#"><i class="czi-sign-out mr-2"></i>Add new Role</a>
+    </div>
+    <!-- Role list -->
+    <div class="table-responsive font-size-md">
+        <table class="table table-hover mb-0">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
+                    <th class="py-3 text-center">#</th>
+                    <th class="py-3 text-center">Name</th>
+                    <th class="py-3 text-right">Action</th>
                 </tr>
-            }
-        }
-        else
-        {
-            <tr>
-                <td class="text-center" colspan="3">Loading...</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @if ((Roles?.HttpStatusCode == HttpStatusCode.OK) && Roles.Data != null)
+                {
+                    @foreach (var item in Roles.Data)
+                    {
+                        <tr>
+                            <td class="py-3 text-center">@No</td>
+                            <td class="py-3 text-center">@item.Name</td>
+                            <td class="py-3 text-right">
+                                <a class="nav-link-style mr-2" href="#" data-toggle="tooltip" title="Edit"><i class="czi-edit"></i></a>
+                                <a class="nav-link-style text-danger" href="#" data-toggle="tooltip" title="Remove"><div class="czi-trash"></div></a>
+                            </td>
+                        </tr>
+                        No += 1;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center" colspan="3">Loading...</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<br class="pb-4">
 
 
 @code {
+    int No = 1;
+
     private Response<List<RoleOutput>>? Roles;
 
     protected override async Task OnInitializedAsync()
