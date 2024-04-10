@@ -100,7 +100,7 @@ public class SeedService(ApplicationDbContext db,
             var jsonText = await File.ReadAllTextAsync(filePath);
             var categories = JsonConvert.DeserializeObject<List<Category>>(jsonText);
 
-            foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description)))
+            foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description, data.IconHtml)))
             {
                 await db.Categories.AddAsync(category);
             }

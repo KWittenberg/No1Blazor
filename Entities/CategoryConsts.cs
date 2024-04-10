@@ -5,4 +5,6 @@ public class CategoryConsts
     public const int NameLength = 64;
 
     public const int DescriptionLength = 254;
+
+    public const int IconHtmlLength = 512;
 }

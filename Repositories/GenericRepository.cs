@@ -3,12 +3,12 @@ using No1B.Data;
 
 namespace No1B.Repositories;
 
-internal abstract class Repository<T> : IRepository<T> where T : class
+internal abstract class GenericRepository<T> : IRepository<T> where T : class
 {
     private readonly ApplicationDbContext _db;
     private readonly DbSet<T> _entity = null;
 
-    private protected Repository(ApplicationDbContext db)
+    protected GenericRepository(ApplicationDbContext db)
     {
         _db = db;
         _entity = _db.Set<T>();
@@ -33,7 +33,7 @@ internal abstract class Repository<T> : IRepository<T> where T : class
             _db.SaveChanges();
             return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }
@@ -47,7 +47,7 @@ internal abstract class Repository<T> : IRepository<T> where T : class
             _db.SaveChanges();
             return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }
@@ -61,7 +61,7 @@ internal abstract class Repository<T> : IRepository<T> where T : class
             _db.SaveChanges();
             return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false;
         }

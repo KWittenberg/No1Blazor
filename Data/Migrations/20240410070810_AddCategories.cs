@@ -18,6 +18,7 @@ namespace No1B.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(254)", maxLength: 254, nullable: true),
+                    IconHtml = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),

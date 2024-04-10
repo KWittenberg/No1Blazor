@@ -9,9 +9,71 @@
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 
-<PageTitle>Log in</PageTitle>
+<PageTitle>Sign in</PageTitle>
 
-<h1>Log in</h1>
+<!-- Sign in -->
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+        <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+            <h1 class="h3 text-light mb-0">Sign in</h1>
+        </div>
+    </div>
+    <br class="mb-5 ">
+</div>
+
+<!-- Sign in Content -->
+<div class="container pb-5 mb-2 mb-md-3">
+    <div class="mt-3 col-6 container">
+        <div class="card border-0 box-shadow">
+            <div class="card-body">
+                <h2 class="h4 mb-1">Sign in</h2>
+                <section>
+                    <StatusMessage Message="@errorMessage" />
+                    <EditForm Model="Input" method="post" OnValidSubmit="LoginUser" FormName="login" class="needs-validation">
+                        <DataAnnotationsValidator />
+                        <hr />
+                        <ValidationSummary class="text-danger" role="alert" />
+
+                        <div class="mt-4 input-group-overlay form-group">
+                            <label for="email" class="ml-4 form-label">Email</label>
+                            <InputText id="email" @bind-Value="Input.Email" class="form-control prepended-form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" required />
+                            <ValidationMessage For="() => Input.Email" class="text-danger" />
+                        </div>
+
+                        <div class="mt-2 input-group-overlay form-group">
+                            <label for="password" class="ml-4 form-label">Password</label>
+                            <InputText id="password" @bind-Value="Input.Password" class="form-control prepended-form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                            <ValidationMessage For="() => Input.Password" class="text-danger" />
+                        </div>
+
+
+                        <div class="ml-4 checkbox mb-3">
+                            <label class="form-label">
+                                <InputCheckbox @bind-Value="Input.RememberMe" class="darker-border-checkbox form-check-input" />
+                                Remember me
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">Sign in</button>
+                        </div>
+                        <div>
+                            <p>
+                                <small>
+                                    <a href="/Account/ForgotPassword">Forgot your password?</a><br/>
+                                    <a href="/Account/ResendEmailConfirmation">Resend email confirmation</a><br />
+                                    <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Register as a new user</a>
+                                </small>
+                            </p>
+                        </div>
+                    </EditForm>
+                </section>
+            </div>
+        </div>
+    </div>
+    <br class="pb-4">
+</div>
+
+@* <h1>Log in</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -61,7 +123,7 @@
             <ExternalLoginPicker />
         </section>
     </div>
-</div>
+</div> *@
 
 @code {
     private string? errorMessage;

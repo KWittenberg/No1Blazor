@@ -12,7 +12,7 @@ using No1B.Data;
 namespace No1B.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240328192105_AddCategories")]
+    [Migration("20240410070810_AddCategories")]
     partial class AddCategories
     {
         /// <inheritdoc />
@@ -269,6 +269,10 @@ namespace No1B.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(254)
                         .HasColumnType("nvarchar(254)");
+
+                    b.Property<string>("IconHtml")
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

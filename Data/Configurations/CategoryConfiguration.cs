@@ -15,5 +15,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(x => x.Name).HasMaxLength(CategoryConsts.NameLength).IsRequired();
 
         builder.Property(x => x.Description).HasMaxLength(CategoryConsts.DescriptionLength);
+
+        builder.Property(x => x.IconHtml).HasMaxLength(CategoryConsts.IconHtmlLength);
     }
 }

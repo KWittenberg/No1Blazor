@@ -9,7 +9,7 @@ namespace No1B.Repositories;
 
 public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Category, CategoryOutput>(db), ICategoryRepository
 {
-    //protected readonly ApplicationDbContext _db = db;
+    protected readonly ApplicationDbContext _db = db;
 
     //public async Task<Response<List<CategoryOutput>>> GetAllAsync()
     //{
@@ -22,7 +22,7 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
 
     public async Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name)
     {
-        var entity = await db.Categories.FirstOrDefaultAsync(x => x.Name == name);
+        var entity = await _db.Categories.FirstOrDefaultAsync(x => x.Name == name);
         if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.NotFound, "Entity Not Found!");
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
@@ -30,27 +30,28 @@ public class CategoryRepository(ApplicationDbContext db) : BaseRepository<Catego
 
     public async Task<Response<CategoryOutput>> AddCategoryAsync(CategoryInput input)
     {
-        var entity = await db.Categories.FirstOrDefaultAsync(x => x.Name == input.Name);
+        var entity = await _db.Categories.FirstOrDefaultAsync(x => x.Name == input.Name);
         if (entity is not null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.Forbidden, "Entity Exists!");
 
-        entity = new Category(Guid.NewGuid(), input.Name, input.Description);
+        entity = new Category(Guid.NewGuid(), input.Name, input.Description, input.IconHtml);
 
-        await db.Categories.AddAsync(entity);
-        await db.SaveChangesAsync();
+        await _db.Categories.AddAsync(entity);
+        await _db.SaveChangesAsync();
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }
 
     public async Task<Response<CategoryOutput>> UpdateCategoryAsync(Guid id, CategoryInput input)
     {
-        var entity = await db.Categories.FindAsync(id);
+        var entity = await _db.Categories.FindAsync(id);
         if (entity is null) return ResponseHelper.ErrorResponse<CategoryOutput>(HttpStatusCode.NotFound, "Entity Not Found!");
 
         entity.SetName(input.Name);
         entity.SetDescription(input.Description);
+        entity.SetIconHtml(input.IconHtml);
 
-        db.Categories.Update(entity);
-        await db.SaveChangesAsync();
+        _db.Categories.Update(entity);
+        await _db.SaveChangesAsync();
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", entity.Adapt<CategoryOutput>());
     }

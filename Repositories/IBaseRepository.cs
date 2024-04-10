@@ -2,7 +2,7 @@
 
 namespace No1B.Repositories;
 
-public interface IBaseRepository<TEntity, TOutput>
+public interface IBaseRepository<T, TOutput>
 {
     Task<Response<List<TOutput>>> GetAllAsync();
 

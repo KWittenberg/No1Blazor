@@ -4,16 +4,20 @@ public class Category : BaseAuditableEntity<Guid>
 {
     protected Category() { }
 
-    public Category(Guid id, string name, string? description)
+    public Category(Guid id, string name, string? description, string? iconHtml)
     {
         SetName(name);
 
         SetDescription(description);
+
+        SetIconHtml(iconHtml);
     }
 
-    public string Name { get; private set; }
+    public string Name { get; private set; } = string.Empty;
 
     public string? Description { get; private set; }
+
+    public string? IconHtml { get; private set; }
 
 
     public void SetName(string name)
@@ -25,27 +29,9 @@ public class Category : BaseAuditableEntity<Guid>
     {
         Description = Check.NotNullOrWhiteSpace(description, nameof(description), CategoryConsts.DescriptionLength);
     }
+
+    public void SetIconHtml(string? iconHtml)
+    {
+        IconHtml = Check.NotNullOrWhiteSpace(iconHtml, nameof(iconHtml), CategoryConsts.IconHtmlLength);
+    }
 }
-
-
-
-
-//public abstract class Category : BaseAuditableEntity<Guid>
-//{
-//    protected Category() { }
-
-//    public static T Create<T>(string name, string? description) where T : Category, new()
-//    {
-//        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-
-//        return new T
-//        {
-//            Name = name,
-//            Description = description,
-//        };
-//    }
-
-//    public string Name { get; private set; } = string.Empty;
-
-//    public string? Description { get; private set; }
-//}

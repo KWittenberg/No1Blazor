@@ -4,7 +4,7 @@ using No1B.Repositories;
 
 namespace No1B.Controllers;
 
-[Route("[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class CategoryController(ICategoryRepository repository) : ControllerBase
 {

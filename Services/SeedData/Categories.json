@@ -1,10 +1,12 @@
 [
   {
     "Name": "Books",
-    "Description": "Book Category"
+    "Description": "Book Category",
+    "IconHtml": "bi bi-book"
   },
   {
     "Name": "Photos",
-    "Description": "Photo Category"
+    "Description": "Photo Category",
+    "IconHtml": "bi bi-file-earmark-image"
   }
 ]

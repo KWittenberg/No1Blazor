@@ -15,8 +15,8 @@ public class AppDbInitializer
         {
             var categoriesToAdd = new List<Category>()
             {
-                new Category(Guid.NewGuid(), "Book", "Book Category"),
-                new Category(Guid.NewGuid(), "Photo", "Photo Category"),
+                new Category(Guid.NewGuid(), "Book", "Book Category", "<i class=\"bi bi-book\"></i>"),
+                new Category(Guid.NewGuid(), "Photo", "Photo Category", "<i class=\"bi bi-file-earmark-image\"></i>"),
             };
 
             db.Categories.AddRange(categoriesToAdd);
