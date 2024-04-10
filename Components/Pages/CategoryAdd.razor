@@ -39,11 +39,15 @@
                             <InputText id="description" class="form-control prepended-form-control" @bind-Value="CategoryInput.Description" type="text" placeholder="Description" />
                             <ValidationMessage For="@(() => CategoryInput.Description)" />
                         </div>
+                        <div class="mt-2 input-group-overlay form-group">
+                            <label for="iconHtml" class="ml-4 form-label">IconHtml</label>
+                            <InputText id="iconHtml" class="form-control prepended-form-control" @bind-Value="CategoryInput.IconHtml" type="text" placeholder="IconHtml" />
+                            <ValidationMessage For="@(() => CategoryInput.IconHtml)" />
+                        </div>
                         <div class="text-right pt-4">
                             <a href="/category" class="btn btn-secondary">Back</a>
                             <button class="btn btn-primary" type="submit">Save</button>
                         </div>
-
                     </EditForm>
                 }
                 else
@@ -79,16 +83,17 @@
             CategoryInput = new CategoryInput()
                 {
                     Name = CategoryOutput.Data.Name,
-                    Description = CategoryOutput.Data.Description
+                    Description = CategoryOutput.Data.Description,
+                    IconHtml = CategoryOutput.Data.IconHtml
                 };
-
         }
         else
         {
             CategoryInput = new CategoryInput()
                 {
                     Name = string.Empty,
-                    Description = string.Empty
+                    Description = string.Empty,
+                    IconHtml = string.Empty
                 };
         }
     }
@@ -99,14 +104,14 @@
 
         if (Id is null)
         {
-            await CategoryRepository.AddCategoryAsync(CategoryInput);
+            await CategoryRepository.AddAsync(CategoryInput);
             CategoryInput = new CategoryInput(); // Clear the form after submission
         }
         else
         {
-            await CategoryRepository.UpdateCategoryAsync(Guid.Parse(Id), CategoryInput);
+            await CategoryRepository.UpdateAsync(Guid.Parse(Id), CategoryInput);
         }
-        
+
         NavigationManager.NavigateTo("/category");
     }
 }

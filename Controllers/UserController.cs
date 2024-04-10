@@ -8,17 +8,23 @@ namespace No1B.Controllers;
 [ApiController]
 public class UserController(IUserRepository repository) : ControllerBase
 {
+    [HttpGet("GetCurrentUserId")]
+    public OkObjectResult GetCurrentUserId()
+    {
+        return Ok(repository.GetCurrentUserId());
+    }
+
     [HttpGet("GetAll")]
     public async Task<ActionResult<Response<List<UserOutput>>>> GetAll()
     {
         return Ok(await repository.GetUsersWithRolesAsync());
     }
 
-    [HttpGet("Get")]
-    public async Task<ActionResult<Response<UserOutput>>> Get(Guid id)
-    {
-        return Ok(await repository.GetByIdAsync(id));
-    }
+    //[HttpGet("Get")]
+    //public async Task<ActionResult<Response<UserOutput>>> Get(Guid id)
+    //{
+    //    return Ok(await repository.GetByIdAsync(id));
+    //}
 
     //[HttpGet("Name")]
     //public async Task<ActionResult<Response<UserOutput>>> GetCategoryByName(string name)
@@ -38,9 +44,9 @@ public class UserController(IUserRepository repository) : ControllerBase
     //    return Ok(await repository.UpdateCategoryAsync(input));
     //}
 
-    [HttpDelete("Delete")]
-    public async Task<ActionResult<Response<UserOutput>>> Delete(Guid id)
-    {
-        return Ok(await repository.DeleteAsync(id));
-    }
+    //[HttpDelete("Delete")]
+    //public async Task<ActionResult<Response<UserOutput>>> Delete(Guid id)
+    //{
+    //    return Ok(await repository.DeleteAsync(id));
+    //}
 }

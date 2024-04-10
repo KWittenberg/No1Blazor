@@ -1,10 +1,11 @@
 ﻿using No1B.DTOs;
-using No1B.Entities;
 
 namespace No1B.Repositories;
 
-public interface IUserRepository : IBaseRepository<ApplicationUser, UserOutput>
+public interface IUserRepository
 {
+    Guid GetCurrentUserId();
+
     Task<Response<List<UserOutput>>> GetUsersWithRolesAsync();
 
     //Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name);

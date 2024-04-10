@@ -23,19 +23,19 @@ public class CategoryController(ICategoryRepository repository) : ControllerBase
     [HttpGet("GetByName")]
     public async Task<ActionResult<Response<CategoryOutput>>> GetByName(string name)
     {
-        return Ok(await repository.GetCategoryByNameAsync(name));
+        return Ok(await repository.GetByNameAsync(name));
     }
 
     [HttpPost("Add")]
     public async Task<ActionResult<Response<CategoryOutput>>> Add(CategoryInput input)
     {
-        return Ok(await repository.AddCategoryAsync(input));
+        return Ok(await repository.AddAsync(input));
     }
 
     [HttpPost("Update")]
     public async Task<ActionResult<Response<CategoryOutput>>> Update(Guid id, CategoryInput input)
     {
-        return Ok(await repository.UpdateCategoryAsync(id, input));
+        return Ok(await repository.UpdateAsync(id, input));
     }
 
     [HttpDelete("Delete")]

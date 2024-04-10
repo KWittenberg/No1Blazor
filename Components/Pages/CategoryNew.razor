@@ -84,7 +84,7 @@
     {
         if (CategoryInput.Name is not null)
         {
-            CategoryRepository.AddCategoryAsync(CategoryInput);
+            CategoryRepository.AddAsync(CategoryInput);
             // CategoryInput = new();
             LoadCategories();
         }
@@ -92,6 +92,6 @@
 
     async void ViewCategory(string name)
     {
-        CategoryOutput = await CategoryRepository.GetCategoryByNameAsync(name);
+        CategoryOutput = await CategoryRepository.GetByNameAsync(name);
     }
 }

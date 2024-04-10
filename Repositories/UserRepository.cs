@@ -2,13 +2,15 @@
 using Microsoft.EntityFrameworkCore;
 using No1B.Data;
 using No1B.DTOs;
-using No1B.Entities;
 using No1B.Enums;
+using System.Security.Claims;
 
 namespace No1B.Repositories;
 
-public class UserRepository(ApplicationDbContext db) : BaseRepository<ApplicationUser, UserOutput>(db), IUserRepository
+public class UserRepository(ApplicationDbContext db, IHttpContextAccessor contextAccessor) : IUserRepository
 {
+    public Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
     public async Task<Response<List<UserOutput>>> GetUsersWithRolesAsync()
     {
         var users = await db.Users.ToListAsync();
@@ -26,6 +28,41 @@ public class UserRepository(ApplicationDbContext db) : BaseRepository<Applicatio
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", usersWithRoles);
     }
+
+
+
+    public async Task<bool> UserExists(string email)
+    {
+        if (await db.Users.AnyAsync(user => user.Email.ToLower().Equals(email.ToLower())))
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+    public Guid UserId
+    {
+        get
+        {
+            var userIdString = contextAccessor.HttpContext?.User?.FindFirstValue("uid");
+            return string.IsNullOrEmpty(userIdString) ? Guid.Empty : Guid.Parse(userIdString);
+        }
+    }
+
+
+
+
+
+
+
+    //public int UserId { get => contextAccessor.HttpContext?.User?.FindFirstValue("uid"); }
 
     //public async Task<Response<List<UserOutput>>> GetUsersWithRolesAsyncNew()
     //{
