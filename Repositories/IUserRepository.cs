@@ -8,9 +8,5 @@ public interface IUserRepository
 
     Task<Response<List<UserOutput>>> GetUsersWithRolesAsync();
 
-    //Task<Response<CategoryOutput>> GetCategoryByNameAsync(string name);
-
-    //Task<Response<CategoryOutput>> AddCategoryAsync(CategoryInput input);
-
-    //Task<Response<CategoryOutput>> UpdateCategoryAsync(CategoryInput input);
+    Task<Response<UserOutput>> GetByIdAsync(Guid id);
 }

@@ -1,15 +1,22 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using No1B.Data;
 using No1B.DTOs;
+using No1B.Entities;
 using No1B.Enums;
 using System.Security.Claims;
 
 namespace No1B.Repositories;
 
-public class UserRepository(ApplicationDbContext db, IHttpContextAccessor contextAccessor) : IUserRepository
+public class UserRepository(ApplicationDbContext db,
+                            IHttpContextAccessor contextAccessor,
+                            UserManager<ApplicationUser> userManager,
+                            RoleManager<IdentityRole> roleManager) : IUserRepository
 {
-    public Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+
+    public Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? Guid.Empty.ToString());
 
     public async Task<Response<List<UserOutput>>> GetUsersWithRolesAsync()
     {
@@ -28,6 +35,28 @@ public class UserRepository(ApplicationDbContext db, IHttpContextAccessor contex
 
         return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", usersWithRoles);
     }
+
+    public async Task<Response<UserOutput>> GetByIdAsync(Guid id)
+    {
+        var user = await userManager.FindByIdAsync(id.ToString());
+        if (user is null) return ResponseHelper.ErrorResponse<UserOutput>(HttpStatusCode.NotFound, "Entity not found");
+
+        var userRoleIds = db.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId).ToList();
+        var userRoles = db.Roles.Where(r => userRoleIds.Contains(r.Id)).ToList();
+        //var userRoles = await userManager.GetRolesAsync(user);
+
+        var output = user.Adapt<UserOutput>();
+        output.Roles = userRoles.Select(r => r.Adapt<RoleOutput>()).ToList();
+
+        return ResponseHelper.CreateResponse(HttpStatusCode.OK, "OK", output);
+    }
+
+
+
+
+
+
+
 
 
 
@@ -60,7 +89,7 @@ public class UserRepository(ApplicationDbContext db, IHttpContextAccessor contex
 
 
 
-
+    //public Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
     //public int UserId { get => contextAccessor.HttpContext?.User?.FindFirstValue("uid"); }
 

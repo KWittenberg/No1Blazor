@@ -22,7 +22,7 @@ public class SeedService(ApplicationDbContext db,
         await MigrateDatabaseAsync();
 #endif
 
-        await SeedAdminRole();
+        await SeedRoles();
         await SeedAdminUser();
 
         await SeedCategories("./Services/SeedData/Categories.json");
@@ -36,7 +36,7 @@ public class SeedService(ApplicationDbContext db,
         }
     }
 
-    private async Task SeedAdminRole()
+    private async Task SeedRoles()
     {
         if (await roleManager.FindByNameAsync(ApplicationRole.Admin) is null)
         {
@@ -45,6 +45,18 @@ public class SeedService(ApplicationDbContext db,
             if (!result.Succeeded) throw new Exception($"Error in creating Role {Environment.NewLine}{string.Join(Environment.NewLine, result.Errors.Select(e => e.Description))}");
 
             var role = await roleManager.FindByNameAsync(ApplicationRole.Admin);
+            var timeNow = DateTime.Now.ToString("HH:mm:ss");
+            if (role is null) throw new Exception($"{timeNow} | Seed ROLE: Fail!");
+            Console.WriteLine($"{timeNow} | Seed ROLE: OK - Added - {role?.Name} role!");
+        }
+
+        if (await roleManager.FindByNameAsync(ApplicationRole.User) is null)
+        {
+            var userRole = new IdentityRole(ApplicationRole.User);
+            var result = await roleManager.CreateAsync(userRole);
+            if (!result.Succeeded) throw new Exception($"Error in creating Role {Environment.NewLine}{string.Join(Environment.NewLine, result.Errors.Select(e => e.Description))}");
+
+            var role = await roleManager.FindByNameAsync(ApplicationRole.User);
             var timeNow = DateTime.Now.ToString("HH:mm:ss");
             if (role is null) throw new Exception($"{timeNow} | Seed ROLE: Fail!");
             Console.WriteLine($"{timeNow} | Seed ROLE: OK - Added - {role?.Name} role!");
@@ -100,12 +112,17 @@ public class SeedService(ApplicationDbContext db,
             var jsonText = await File.ReadAllTextAsync(filePath);
             var categories = JsonConvert.DeserializeObject<List<Category>>(jsonText);
 
-            foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description, data.IconHtml)))
-            {
-                await db.Categories.AddAsync(category);
-            }
+            //foreach (var category in categories.Select(data => new Category(Guid.NewGuid(), data.Name, data.Description, data.IconHtml)))
+            //{
+            //    await db.Categories.AddAsync(category);
+            //}
+            //await db.SaveChangesAsync();
 
-            await db.SaveChangesAsync();
+            if (categories is not null)
+            {
+                await db.Categories.AddRangeAsync(categories);
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

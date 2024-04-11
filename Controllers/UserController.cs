@@ -20,11 +20,11 @@ public class UserController(IUserRepository repository) : ControllerBase
         return Ok(await repository.GetUsersWithRolesAsync());
     }
 
-    //[HttpGet("Get")]
-    //public async Task<ActionResult<Response<UserOutput>>> Get(Guid id)
-    //{
-    //    return Ok(await repository.GetByIdAsync(id));
-    //}
+    [HttpGet("Get")]
+    public async Task<ActionResult<Response<UserOutput>>> Get(Guid id)
+    {
+        return Ok(await repository.GetByIdAsync(id));
+    }
 
     //[HttpGet("Name")]
     //public async Task<ActionResult<Response<UserOutput>>> GetCategoryByName(string name)

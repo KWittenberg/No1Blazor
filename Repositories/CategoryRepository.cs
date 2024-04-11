@@ -11,7 +11,7 @@ public class CategoryRepository(ApplicationDbContext db) : ICategoryRepository
 {
     public async Task<Response<List<CategoryOutput>>> GetAllAsync()
     {
-        var entities = await db.Categories.ToListAsync();
+        var entities = await db.Categories.AsNoTracking().ToListAsync();
         if (entities.Count == 0) return ResponseHelper.CreateResponse<List<CategoryOutput>>(HttpStatusCode.NotFound, "Entities Not Found!", null);
         var outputs = entities.Adapt<List<CategoryOutput>>();
 

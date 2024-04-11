@@ -11,6 +11,13 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Category> Categories { get; set; }
 
 
+
+    // pogledati i prebaciti konfiguraciju baze
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder
+    //    .UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FootballLeague_EfCore; Encrypt=true", sqlOptions => { sqlOptions
+    //        .EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(5), errorNumbersToAdd: null);
+    //});
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -22,8 +29,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         // Add Other Configurations       
     }
 
-    private Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+    private Guid GetCurrentUserId() => Guid.Parse(contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? Guid.Empty.ToString());
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

@@ -1,12 +1,52 @@
 [
   {
     "Name": "Books",
-    "Description": "Book Category",
+    "Description": "Explore the world of literature with our vast collection of books.",
     "IconHtml": "bi bi-book"
   },
   {
     "Name": "Photos",
-    "Description": "Photo Category",
+    "Description": "Capture precious moments and memories with our photo category.",
     "IconHtml": "bi bi-file-earmark-image"
+  },
+  {
+    "Name": "Music",
+    "Description": "Immerse yourself in the world of melodies and rhythms with our music category.",
+    "IconHtml": "bi bi-music-note"
+  },
+  {
+    "Name": "Movies",
+    "Description": "Embark on unforgettable cinematic journeys with our movie category.",
+    "IconHtml": "bi bi-film"
+  },
+  {
+    "Name": "Food",
+    "Description": "Satisfy your culinary cravings and indulge in delicious flavors with our food category.",
+    "IconHtml": "bi bi-cup-straw"
+  },
+  {
+    "Name": "Travel",
+    "Description": "Discover new destinations and plan your next adventure with our travel category.",
+    "IconHtml": "bi bi-airplane"
+  },
+  {
+    "Name": "Technology",
+    "Description": "Stay updated on the latest innovations and advancements in the world of technology with our category.",
+    "IconHtml": "bi bi-laptop"
+  },
+  {
+    "Name": "Sports",
+    "Description": "Experience the thrill of victory and the excitement of competition with our sports category.",
+    "IconHtml": "bi bi-trophy"
+  },
+  {
+    "Name": "Fashion",
+    "Description": "Express yourself and showcase your style with our fashionable clothing and accessories category.",
+    "IconHtml": "bi bi-bag-check"
+  },
+  {
+    "Name": "Health",
+    "Description": "Prioritize your well-being and discover ways to maintain a healthy lifestyle with our health category.",
+    "IconHtml": "bi bi-heart"
   }
 ]
